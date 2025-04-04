@@ -148,11 +148,21 @@ class API {
 
   async getCategories(): Promise<APIResponse<AICategory[]>> {
     const categoriesResponse = await this.getAllCategories();
+    
+    const categoryIcons: { [key: string]: any } = {
+      "Code Models": Code2,
+      "Research": FileText,
+      "Other": Database,
+      "Vision": Image,
+      "Text": MessageSquare,
+    };
+  
     return { 
       data: categoriesResponse.data.map((c, index) => ({ 
         id: index.toString(), 
         title: c, 
         count: 0, 
+        icon: categoryIcons[c] || Database, 
         growth: 0, 
         color: "bg-default" 
       })), 
@@ -160,5 +170,6 @@ class API {
     };
   }
 }
+  
 
 export const api = new API();
